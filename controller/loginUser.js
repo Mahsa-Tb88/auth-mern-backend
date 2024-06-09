@@ -18,7 +18,7 @@ export async function loginUser(req, res) {
         findedUser.password = undefined;
         res.cookie("token", token, {
           httpOnly: true,
-          maxAge: 36000,
+          maxAge: 86400,
           sameSite: "None",
           secure: false,
         });
