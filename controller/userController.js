@@ -11,6 +11,7 @@ export async function updateUser(req, res) {
     const user = await User.findById(req.params.id);
     if (user) {
       const username = req.body.username ?? user.username;
+      const image = req.body.image ?? user.image;
       const password = req.body.password;
       let hashPassword = user.password;
       console.log(req.body.password);
@@ -29,6 +30,7 @@ export async function updateUser(req, res) {
         {
           username,
           password: hashPassword,
+          image,
         },
         { new: true }
       );
@@ -40,7 +42,6 @@ export async function updateUser(req, res) {
   }
 }
 export async function deleteUser(req, res) {
-  const id = req.params.id;
   const isValid = mongoose.isValidObjectId(req.params.id);
   if (!isValid) {
     return res.fail("Invalid user Id");

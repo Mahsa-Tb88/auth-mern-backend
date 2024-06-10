@@ -9,6 +9,9 @@ import responseMiddleWare from "./middleWares/respondMiddleWares.js";
 import { checkToken } from "./middleWares/authMiddleWare.js";
 import corsMiddleware from "./middleWares/corsMiddleWare.js";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+
 dotenv.config();
 
 const app = express();
@@ -18,6 +21,8 @@ app.use(responseMiddleWare);
 app.use(cookieParser());
 app.use(checkToken);
 app.use(miscRoutes);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use("/auth", authRoutes);
 app.use("/user", userRouter);
